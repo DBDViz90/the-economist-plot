@@ -64,7 +64,7 @@ export default function App() {
           Copied from the following original graph: <a href="https://www.economist.com/graphic-detail/2021/08/24/infections-caught-in-laboratories-are-surprisingly-common" target="_blank" rel="noopener noreferrer">The Economist article</a>
         </div>
         <div style={{ fontSize: '12px', color: '#666', marginTop: barPlotHeight*1/500+'px', marginLeft: -barPlotHeight*12/500+'px', opacity: 0.8 }}>
-          Link to the Github code: <a href="?" target="_blank" rel="noopener noreferrer">?</a>
+          <a href="https://github.com/DBDViz90/the-economist-plot" target="_blank" rel="noopener noreferrer">Link to the Github code </a>
         </div>
       </div>
     </div>
