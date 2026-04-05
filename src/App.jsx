@@ -1,10 +1,24 @@
 import './App.css'
 import { data } from './data.js'
 import BarPlot from './barplot.jsx'
+import { useState, useEffect } from 'react';
 
 export default function App() {
-  const barPlotWidth = 800;
-  const barPlotHeight = 350;
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+
+  const barPlotWidth = isMobile ? Math.min(window.innerWidth * 0.9, 800) : 800;
+  const barPlotHeight = isMobile ? 250 : 350;
 
   return (
     <div style={{
@@ -13,7 +27,8 @@ export default function App() {
       alignItems: 'center',
       justifyContent: 'center',
       height: '100vh',
-      width: '100vw'
+      width: '100vw',
+      overflowX: 'hidden'
     }}>
       <div style={{
         width: '100%',
@@ -52,18 +67,18 @@ export default function App() {
 
         {/* part above the barplot*/}
 
-        <BarPlot data={data} width={barPlotWidth} height={barPlotHeight}/>
+        <BarPlot data={data} width={barPlotWidth} height={barPlotHeight} isMobile={isMobile}/>
         
         {/* part below the barplot */}
 
-        <footer style={{ fontSize: '15px', color: '#666', marginTop: -barPlotHeight*1/500+'px', marginLeft: -barPlotHeight*12/500+'px', opacity: 0.9, lineHeight: barPlotHeight*1.6/500 }}>
+        <footer style={{ fontSize: isMobile ? '12px' : '15px', color: '#666', marginTop: -barPlotHeight*1/500+'px', marginLeft: -barPlotHeight*12/500+'px', opacity: 0.9, lineHeight: barPlotHeight*1.6/500 }}>
           Sources: Laboratory-Acquired Infection Database; American Biological Safety Association<br />
-          <span style={{ fontFamily: "Times New Roman", fontSize: '16px' }}> <br /> The Economist </span>
+          <span style={{ fontFamily: "Times New Roman", fontSize: isMobile ? '14px' : '16px' }}> <br /> The Economist </span>
         </footer>
-        <div style={{ fontSize: '12px', color: '#666', marginTop: barPlotHeight*1/500+'px', marginLeft: -barPlotHeight*12/500+'px', opacity: 0.8 }}>
+        <div style={{ fontSize: isMobile ? '10px' : '12px', color: '#666', marginTop: barPlotHeight*1/500+'px', marginLeft: -barPlotHeight*12/500+'px', opacity: 0.8 }}>
           Copied from the following original graph: <a href="https://www.economist.com/graphic-detail/2021/08/24/infections-caught-in-laboratories-are-surprisingly-common" target="_blank" rel="noopener noreferrer">The Economist article</a>
         </div>
-        <div style={{ fontSize: '12px', color: '#666', marginTop: barPlotHeight*1/500+'px', marginLeft: -barPlotHeight*12/500+'px', opacity: 0.8 }}>
+        <div style={{ fontSize: isMobile ? '10px' : '12px', color: '#666', marginTop: barPlotHeight*1/500+'px', marginLeft: -barPlotHeight*12/500+'px', opacity: 0.8 }}>
           <a href="https://github.com/DBDViz90/the-economist-plot" target="_blank" rel="noopener noreferrer">Link to the Github code </a>
         </div>
       </div>
